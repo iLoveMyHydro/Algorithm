@@ -10,16 +10,17 @@ namespace SortierAlgorithmus
     {
         GameMaster gameMaster = new GameMaster();
 
-        #region Properties
+        #region Fields
 
-        public int Possibility { get; set; } = 0;
+        DateTime time = DateTime.Now;
 
         #endregion
 
-        internal void BubbleSort()
+        #region BubbleSort
+        internal void BubbleSort(List<int> Liste, int Possibility)
         {
             bool finished = false;
-            int j = gameMaster.Liste.Count;
+            int j = Liste.Count;
             int saveNumber = 0;
 
             if (Possibility == 1)
@@ -27,113 +28,281 @@ namespace SortierAlgorithmus
                 do
                 {
                     finished = false;
-                    for(int i = 0; i < j - 1; i++)
-                    if (gameMaster.Liste[i] > gameMaster.Liste[i + 1])
-                    {
-                        saveNumber = gameMaster.Liste[i];
+                    for (int i = 0; i < j - 1; i++)
+                        if (Liste[i] > Liste[i + 1])
+                        {
+                            saveNumber = Liste[i];
 
-                        gameMaster.Liste[i] = gameMaster.Liste[i + 1];
+                            Liste[i] = Liste[i + 1];
 
-                        gameMaster.Liste[i + 1] = saveNumber;
+                            Liste[i + 1] = saveNumber;
 
-                        finished = true;
-                    }
+                            finished = true;
+                        }
                     j--;
                 }
                 while (finished);
-
-
-
-
-                foreach (int wert in gameMaster.Liste)
+            }
+            if (Possibility == 2)
+            {
+                do
                 {
-                    Console.WriteLine(wert);
-                }
-                Console.ReadKey();
+                    finished = false;
+                    for (int i = 0; i < j - 1; i++)
+                        if (Liste[i] < Liste[i + 1])
+                        {
+                            saveNumber = Liste[i];
 
+                            Liste[i] = Liste[i + 1];
+
+                            Liste[i + 1] = saveNumber;
+
+                            finished = true;
+                        }
+                    j--;
+                }
+                while (finished);
+            }
+            //else
+            //{
+            //    do
+            //    {
+            //        Liste.Max();
+
+            //        finished = false;
+            //        for (int i = 0; i < j - 1; i++)
+            //            if (Liste[i] < Liste[i + 1])
+            //            {
+            //                saveNumber = Liste[i];
+
+            //                Liste[i] = Liste[i + 1];
+
+            //                Liste[i + 1] = saveNumber;
+
+            //                finished = true;
+            //            }
+            //        j--;
+            //    }
+            //    while (finished);
+            //}
+        }
+        #endregion
+
+        #region MergeSort
+
+        internal void WhichMergeSort(List<int> Liste, int Possibility)
+        {
+            if (Possibility == 1)
+            {
+                MergeSortSB(Liste);
             }
             else if (Possibility == 2)
             {
-                while (!finished)
+                MergeSortBS(Liste);
+            }
+            else
+            {
+                MergeSortZ(Liste);
+            }
+        }
+
+
+        private void MergeSortSB(List<int> Liste)
+        {
+            int length = Liste.Count;
+            if (length <= 1) return;
+
+            int middle = length / 2;
+            List<int> left = new List<int>(middle);
+            List<int> right = new List<int>(length - middle);
+
+            int i = 0;
+            int j = 0;
+
+            for (; i < length; i++)
+            {
+                if (i < middle)
                 {
-                    j = 0;
-
-                    finished = true;
-                    for (int i = gameMaster.Liste.Count; i - 1 < j; i--)
-                    {
-                        if (gameMaster.Liste[i] > gameMaster.Liste[i + 1])
-                        {
-                            saveNumber = gameMaster.Liste[i];
-
-                            gameMaster.Liste[i] = gameMaster.Liste[i + 1];
-
-                            gameMaster.Liste[i + 1] = saveNumber;
-
-                            finished = false;
-                        }
-                    }
+                    left.Add(Liste[i]);
+                    j++;
+                }
+                else
+                {
+                    right.Add(Liste[j]);
                     j++;
                 }
             }
-            else
-            {
+            MergeSortSB(left);
+            MergeSortSB(right);
+            MergeSB(left, right, Liste);
 
+        }
+        internal void MergeSB(List<int> left, List<int> right, List<int> Liste)
+        {
+            int leftSize = Liste.Count / 2;
+            int rightSize = Liste.Count - leftSize;
+            int i = 0, l = 0, r = 0;
+
+            while (l < leftSize && r < rightSize)
+            {
+                if (left[l] < right[r])
+                {
+                    Liste[i] = left[l];
+                    i++;
+                    l++;
+                }
+                else
+                {
+                    Liste[i] = right[r];
+                    i++;
+                    r++;
+                }
+            }
+            while (l < leftSize)
+            {
+                Liste[i] = left[l];
+                i++;
+                l++;
+            }
+            while (r < rightSize)
+            {
+                Liste[i] = right[r];
+                i++;
+                r++;
             }
         }
 
+        internal void MergeSortBS(List<int> Liste)
+        {
+            int length = Liste.Count;
+            if (length <= 1) return;
 
+            int middle = length / 2;
+            List<int> left = new List<int>(middle);
+            List<int> right = new List<int>(length - middle);
 
-        internal void HeapSort()
+            int i = 0;
+            int j = 0;
+
+            for (; i < length; i++)
+            {
+                if (i < middle)
+                {
+                    left.Add(Liste[i]);
+                    j++;
+                }
+                else
+                {
+                    right.Add(Liste[j]);
+                    j++;
+                }
+            }
+            MergeSortBS(left);
+            MergeSortBS(right);
+            MergeBS(left, right, Liste);
+        }
+        internal void MergeBS(List<int> left, List<int> right, List<int> Liste)
+        {
+            int leftSize = Liste.Count / 2;
+            int rightSize = Liste.Count - leftSize;
+            int i = 0, l = 0, r = 0;
+
+            while (l < leftSize && r < rightSize)
+            {
+                if (left[l] > right[r])
+                {
+                    Liste[i] = left[l];
+                    i++;
+                    l++;
+                }
+                else
+                {
+                    Liste[i] = right[r];
+                    i++;
+                    r++;
+                }
+            }
+            while (l < leftSize)
+            {
+                Liste[i] = left[l];
+                i++;
+                l++;
+            }
+            while (r < rightSize)
+            {
+                Liste[i] = right[r];
+                i++;
+                r++;
+            }
+        }
+
+        internal void MergeSortZ(List<int> Liste)
+        {
+
+        }
+
+        internal void MergeZ(List<int> left, List<int> right, List<int> Liste)
+        {
+
+        }
+        #endregion
+
+        #region QuickSort
+        internal void WhichQuickSort(List<int> Liste, int Possibility)
         {
             if (Possibility == 1)
             {
-
+                QuickSortSB(Liste);
             }
             else if (Possibility == 2)
             {
-
+                QuickSortBS(Liste);
             }
             else
             {
-
+                QuickSortZ(Liste);
             }
         }
 
-        internal void MergeSort()
+        internal void QuickSortSB(List<int> Liste)
         {
-            if (Possibility == 1)
-            {
 
-            }
-            else if (Possibility == 2)
-            {
-
-            }
-            else
-            {
-
-            }
         }
-
-        internal void QuickSort()
+        internal void QuickSB(List<int> left, List<int> right)
         {
-            if (Possibility == 1)
-            {
 
-            }
-            else if (Possibility == 2)
-            {
+        }
+        
+        internal void QuickSortBS(List<int> Liste)
+        {
 
-            }
-            else
-            {
+        }
+        internal void QuickBS(List<int> left, List<int> right)
+        {
 
-            }
         }
 
+        internal void QuickSortZ(List<int> Liste)
+        {
+
+        }
+        internal void QuickZ(List<int> left, List<int> right)
+        {
+
+        }
+        #endregion
+
+        #region GetTime
         internal void GetTime()
         {
+            time = DateTime.Now;
+        }
+        #endregion
 
+        internal void ShowTime()
+        {
+            Console.WriteLine("BubbleSort:" + (DateTime.Now - time).TotalSeconds);
+            Console.ReadKey();
         }
     }
 }

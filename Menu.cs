@@ -74,7 +74,7 @@ namespace SortierAlgorithmus
         /// <summary>
         /// Prints the titel "Hauptmenü" 
         /// </summary>
-        public void PrintTitel()
+        public void PrintTitle()
         {
             Console.Clear();
 
@@ -109,10 +109,10 @@ namespace SortierAlgorithmus
             {
                 Console.SetCursorPosition(left, top);
 
-                Console.WriteLine($"{(option == 1 ? decorator : "   ")}" + TextNewListButton);
-                Console.WriteLine($"{(option == 2 ? decorator : "   ")}" + TextGameExplanationButton);
-                Console.WriteLine($"{(option == 3 ? decorator : "   ")}" + TextGameCreditsButton);
-                Console.WriteLine($"{(option == 4 ? decorator : "   ")}" + TextGameQuitButton);
+                Console.WriteLine($"{(option == 1 ? decorator : "  ")}" + TextNewListButton);
+                Console.WriteLine($"{(option == 2 ? decorator : "  ")}" + TextGameExplanationButton);
+                Console.WriteLine($"{(option == 3 ? decorator : "  ")}" + TextGameCreditsButton);
+                Console.WriteLine($"{(option == 4 ? decorator : "  ")}" + TextGameQuitButton);
 
                 key = Console.ReadKey(false);
 
@@ -162,7 +162,7 @@ namespace SortierAlgorithmus
             Console.WriteLine(TextGoMainMenu);
 
             query = Console.ReadKey().Key;
-            PrintTitel();
+            PrintTitle();
             MenuRequest();
         }
 
@@ -181,7 +181,7 @@ namespace SortierAlgorithmus
 
             Console.ReadKey();
 
-            PrintTitel();
+            PrintTitle();
             MenuRequest();
         }
     }

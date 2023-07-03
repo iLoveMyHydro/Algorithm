@@ -6,7 +6,7 @@
         {
             var menu = new Menu();
 
-            menu.PrintTitel();
+            menu.PrintTitle();
             menu.MenuRequest();
         }
     }
