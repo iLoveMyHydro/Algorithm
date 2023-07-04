@@ -63,28 +63,28 @@ namespace SortierAlgorithmus
                 }
                 while (finished);
             }
-            //else
-            //{
-            //    do
-            //    {
-            //        Liste.Max();
+            else
+            {
+                do
+                {
+                    Liste.Max();
 
-            //        finished = false;
-            //        for (int i = 0; i < j - 1; i++)
-            //            if (Liste[i] < Liste[i + 1])
-            //            {
-            //                saveNumber = Liste[i];
+                    finished = false;
+                    for (int i = 0; i < Liste.Count / 2 || j > Liste.Count / 2; i++, j--)
+                        if (Liste[i] < Liste[i + 1])
+                        {
+                            saveNumber = Liste[i];
 
-            //                Liste[i] = Liste[i + 1];
+                            Liste[i] = Liste[i + 1];
 
-            //                Liste[i + 1] = saveNumber;
+                            Liste[i + 1] = saveNumber;
 
-            //                finished = true;
-            //            }
-            //        j--;
-            //    }
-            //    while (finished);
-            //}
+                            finished = true;
+                        }
+                    j--;
+                }
+                while (finished);
+            }
         }
         #endregion
 
@@ -141,7 +141,9 @@ namespace SortierAlgorithmus
         {
             int leftSize = Liste.Count / 2;
             int rightSize = Liste.Count - leftSize;
-            int i = 0, l = 0, r = 0;
+            int i = 0;
+            int l = 0;
+            int r = 0;
 
             while (l < leftSize && r < rightSize)
             {
@@ -272,7 +274,7 @@ namespace SortierAlgorithmus
         {
 
         }
-        
+
         internal void QuickSortBS(List<int> Liste)
         {
 

@@ -103,15 +103,15 @@ namespace SortierAlgorithmus
 
                 algorithms.GetTime();
 
-                //algorithms.BubbleSort(Liste, Possibility);
+                algorithms.BubbleSort(Liste, Possibility);
 
-                algorithms.WhichMergeSort(Liste, Possibility);
+                //algorithms.WhichMergeSort(Liste, Possibility);
 
-                algorithms.WhichQuickSort(Liste, Possibility);
+                //algorithms.WhichQuickSort(Liste, Possibility);
 
                 ShowList(Liste);
 
-                algorithms.ShowTime();
+                //algorithms.ShowTime();
 
                 menu.PrintTitle();
                 menu.MenuRequest();
