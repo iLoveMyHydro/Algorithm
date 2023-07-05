@@ -4,7 +4,6 @@ namespace SortierAlgorithmus
 {
     internal class Menu
     {
-
         #region Constant
 
         private const string TextMainMenu = " _   _                   _                " +
@@ -72,9 +71,17 @@ namespace SortierAlgorithmus
             "um die Unterschiede und Effizienz der Sortiermethoden zu erkunden." +
             "\r\n\r\nViel Spaß beim Sortieren Ihrer Zahlen mit dem Zahlen-Sortierer!";
 
+        private const string TextPressEnter = "\nBenutze ⬆️  und ⬇️  zum navigieren und drücke " +
+                    "\u001b[32mEnter/Return\u001b[0m zum auswählen:";
+
+        private const string Textdecorator = "✅ \u001b[32m";
+
+        private const string TextParagraph = "\n";
         #endregion
 
         GameMaster gameMaster = new GameMaster();
+
+        #region PrintTitle
 
         /// <summary>
         /// Prints the titel "Hauptmenü" 
@@ -91,33 +98,54 @@ namespace SortierAlgorithmus
             Console.ForegroundColor = ConsoleColor.White;
         }
 
+        #endregion
+
+        #region MenuRequest
+
         /// <summary>
         /// Query for Main Menu -> 1,2,3 or 4
         /// </summary>
         public void MenuRequest()
         {
+            #region Fields
+
+            bool isSelected = false;
+
+            var maxOption = 4;
+
+            var lowestOption = 1;
+
+            var optionNewList = 1;
+
+            var optionGameExplanation = 2;
+
+            var optionCredits = 3;
+
+            var optionEndGame = 4;
+
+            var option = 1;
+
+            #endregion
+
             //Code von -> https://www.youtube.com/watch?v=YyD1MRJY0qI&list=PLPHO1wRRC5Ltj9KK_XucIXoKGdNdMyZ11&index=9 
             //Wurde aber zum Teil auf das bestehende Programm umgeändert!
             //Ist nur in dieser Methode!
             Console.OutputEncoding = Encoding.UTF8;
             Console.CursorVisible = false;
             Console.ResetColor();
-            Console.WriteLine("\nBenutze ⬆️  und ⬇️  zum navigieren und drücke " +
-                "\u001b[32mEnter/Return\u001b[0m zum auswählen:");
+            Console.WriteLine(TextPressEnter);
             (int left, int top) = Console.GetCursorPosition();
-            var option = 1;
-            var decorator = "✅ \u001b[32m";
             ConsoleKeyInfo key;
-            bool isSelected = false;
 
             while (!isSelected)
             {
                 Console.SetCursorPosition(left, top);
 
-                Console.WriteLine($"{(option == 1 ? decorator : "   ")}" + TextNewListButton);
-                Console.WriteLine($"{(option == 2 ? decorator : "   ")}" + TextGameExplanationButton);
-                Console.WriteLine($"{(option == 3 ? decorator : "   ")}" + TextGameCreditsButton);
-                Console.WriteLine($"{(option == 4 ? decorator : "   ")}" + TextGameQuitButton);
+                Console.WriteLine($"{(option == optionNewList ? Textdecorator : "  ")} {TextNewListButton}");
+                Console.WriteLine($"{(option == optionGameExplanation ? Textdecorator : "  ")}" +
+                    $" {TextGameExplanationButton}");
+                Console.WriteLine($"{(option == optionCredits ? Textdecorator : "  ")} {TextGameCreditsButton}");
+                Console.WriteLine($"{(option == optionEndGame ? Textdecorator : "  ")} {TextGameQuitButton}");
 
                 key = Console.ReadKey(false);
 
@@ -125,12 +153,12 @@ namespace SortierAlgorithmus
                 {
                     case ConsoleKey.UpArrow:
                     case ConsoleKey.W:
-                        option = option == 1 ? 4 : option - 1;
+                        option = option == lowestOption ? maxOption : option - lowestOption;
                         break;
 
                     case ConsoleKey.DownArrow:
                     case ConsoleKey.S:
-                        option = option == 4 ? 1 : option + 1;
+                        option = option == maxOption ? lowestOption : option + lowestOption;
                         break;
 
                     case ConsoleKey.Enter:
@@ -140,11 +168,15 @@ namespace SortierAlgorithmus
             }
             Console.ResetColor();
 
-            if (option == 1) gameMaster.IsListSorted();
-            if (option == 2) GameExplanation();
-            if (option == 3) Credits();
-            if (option == 4) Environment.Exit(0);
+            if (option == optionNewList) gameMaster.IsListSorted();
+            if (option == optionGameExplanation) GameExplanation();
+            if (option == optionCredits) Credits();
+            if (option == optionEndGame) Environment.Exit(0);
         }
+
+        #endregion
+
+        #region Credits
 
         /// <summary>
         /// Just the credits of the game lol
@@ -162,7 +194,7 @@ namespace SortierAlgorithmus
             Console.WriteLine(TextGraphicDesigner);
             Console.WriteLine(TextProgrammer);
 
-            Console.WriteLine("\n");
+            Console.WriteLine(TextParagraph);
 
             Console.WriteLine(TextGoMainMenu);
 
@@ -170,6 +202,10 @@ namespace SortierAlgorithmus
             PrintTitle();
             MenuRequest();
         }
+
+        #endregion
+
+        #region GameExplanation
 
         /// <summary>
         /// Explains the Mechanics and the game in general for the player 
@@ -180,12 +216,14 @@ namespace SortierAlgorithmus
 
             Console.WriteLine(TextExplainMechanics);
 
-            Console.WriteLine("\r\n" + TextGoMainMenu);
+            Console.WriteLine($"{TextParagraph}{TextGoMainMenu}");
 
             Console.ReadKey();
 
             PrintTitle();
             MenuRequest();
         }
+
+        #endregion
     }
 }

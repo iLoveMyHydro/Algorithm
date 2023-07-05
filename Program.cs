@@ -6,8 +6,12 @@
         {
             var menu = new Menu();
 
+            #region Starting Menu
+
             menu.PrintTitle();
             menu.MenuRequest();
+
+            #endregion
         }
     }
 }

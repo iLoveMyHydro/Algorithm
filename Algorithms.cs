@@ -8,28 +8,47 @@ namespace SortierAlgorithmus
 {
     internal class Algorithms
     {
-        GameMaster gameMaster = new GameMaster();
+        #region Fields
+
+        private int smallToBig = 1;
+
+        private int bigToSmall = 2;
+
+        private int zickZack = 3;
+
+        #endregion
 
         #region BubbleSort
         internal void BubbleSort(ref List<int> Liste, int Possibility)
         {
-            bool finished = false;
-            int j = Liste.Count;
-            int saveNumber = 0;
+            #region Fields
+
+            var finished = false;
+
+            var j = Liste.Count;
+
+            var saveNumber = 0;
+
+            var nextToIndex = 1;
+
+            #endregion
+
+            #region Small To Big
+
             //Smallest to Biggest
-            if (Possibility == 1)
+            if (Possibility == smallToBig)
             {
                 do
                 {
                     finished = false;
-                    for (int i = 0; i < j - 1; i++)
-                        if (Liste[i] > Liste[i + 1])
+                    for (int i = 0; i < j - nextToIndex; i++)
+                        if (Liste[i] > Liste[i + nextToIndex])
                         {
                             saveNumber = Liste[i];
 
-                            Liste[i] = Liste[i + 1];
+                            Liste[i] = Liste[i + nextToIndex];
 
-                            Liste[i + 1] = saveNumber;
+                            Liste[i + nextToIndex] = saveNumber;
 
                             finished = true;
                         }
@@ -37,20 +56,25 @@ namespace SortierAlgorithmus
                 }
                 while (finished);
             }
+
+            #endregion
+
+            #region Big To Small
+
             //Biggest to Smallest
-            if (Possibility == 2)
+            if (Possibility == bigToSmall)
             {
                 do
                 {
                     finished = false;
-                    for (int i = 0; i < j - 1; i++)
-                        if (Liste[i] < Liste[i + 1])
+                    for (int i = 0; i < j - nextToIndex; i++)
+                        if (Liste[i] < Liste[i + nextToIndex])
                         {
                             saveNumber = Liste[i];
 
-                            Liste[i] = Liste[i + 1];
+                            Liste[i] = Liste[i + nextToIndex];
 
-                            Liste[i + 1] = saveNumber;
+                            Liste[i + nextToIndex] = saveNumber;
 
                             finished = true;
                         }
@@ -58,19 +82,29 @@ namespace SortierAlgorithmus
                 }
                 while (finished);
             }
-            if (Possibility == 3)
+
+            #endregion
+
+            #region ZickZack
+
+            if (Possibility == zickZack)
             {
                 //Algorithmus wurde von ChatGPT entworfen da die erste Idee zu kompliziert wurde!
 
-                Liste.Sort();
-                Liste.Reverse();
+                #region Fields
 
-                // Initialisiere die Variablen und erstelle die Ergebnisliste
-                int largestIndex = 0;
-                int smallestIndex = Liste.Count - 1;
-                List<int> result = new List<int>(Liste.Count);
+                var largestIndex = 0;
+
+                int smallestIndex = Liste.Count - nextToIndex;
 
                 bool straightIteration = true;
+
+                #endregion
+
+                List<int> result = new List<int>(Liste.Count);
+
+                Liste.Sort();
+                Liste.Reverse();
 
                 while (largestIndex <= smallestIndex)
                 {
@@ -89,35 +123,56 @@ namespace SortierAlgorithmus
                 }
                 Liste = result;
             }
+            #endregion
         }
         #endregion
 
         #region MergeSort
 
+        #region Which MergeSort
+
         internal void WhichMergeSort(List<int> Liste, int Possibility)
         {
-            if (Possibility == 1)
+            if (Possibility == smallToBig)
             {
                 MergeSortSB(Liste);
             }
-            if (Possibility == 2)
+            if (Possibility == bigToSmall)
             {
                 MergeSortBS(Liste);
             }
         }
 
+        #endregion
+
+        #region Small to Big
 
         private void MergeSortSB(List<int> Liste)
         {
-            int length = Liste.Count;
-            if (length <= 1) return;
+            #region Fields
 
-            int middle = length / 2;
+            var noList = 1;
+
+            var divideThrough2 = 2;
+
+            var i = 0;
+
+            var j = 0;
+
+            var length = Liste.Count;
+
+            var middle = length / divideThrough2;
+            #endregion
+
+            #region List
+
             List<int> left = new List<int>(middle);
+
             List<int> right = new List<int>(length - middle);
 
-            int i = 0;
-            int j = 0;
+            #endregion
+
+            if (length <= noList) return;
 
             for (; i < length; i++)
             {
@@ -135,15 +190,25 @@ namespace SortierAlgorithmus
             MergeSortSB(left);
             MergeSortSB(right);
             MergeSB(left, right, Liste);
-
         }
+
         internal void MergeSB(List<int> left, List<int> right, List<int> Liste)
         {
-            int leftSize = Liste.Count / 2;
-            int rightSize = Liste.Count - leftSize;
-            int i = 0;
-            int l = 0;
-            int r = 0;
+            #region Fields
+
+            var divideThrough2 = 2;
+
+            var leftSize = Liste.Count / divideThrough2;
+
+            var rightSize = Liste.Count - leftSize;
+
+            var i = 0;
+
+            var l = 0;
+
+            var r = 0;
+
+            #endregion
 
             while (l < leftSize && r < rightSize)
             {
@@ -173,18 +238,37 @@ namespace SortierAlgorithmus
                 r++;
             }
         }
+        #endregion
+
+        #region Big to Small
 
         internal void MergeSortBS(List<int> Liste)
         {
-            int length = Liste.Count;
-            if (length <= 1) return;
+            #region Fields
 
-            int middle = length / 2;
+            var length = Liste.Count;
+
+            var noList = 1;
+
+            var divideThrough2 = 2;
+
+            var middle = length / divideThrough2;
+
+            var i = 0;
+
+            var j = 0;
+
+            #endregion
+
+            #region List
+
             List<int> left = new List<int>(middle);
+
             List<int> right = new List<int>(length - middle);
 
-            int i = 0;
-            int j = 0;
+            #endregion
+
+            if (length <= noList) return;
 
             for (; i < length; i++)
             {
@@ -205,9 +289,19 @@ namespace SortierAlgorithmus
         }
         internal void MergeBS(List<int> left, List<int> right, List<int> Liste)
         {
-            int leftSize = Liste.Count / 2;
-            int rightSize = Liste.Count - leftSize;
-            int i = 0, l = 0, r = 0;
+            #region Fields
+            var divideThrough2 = 2;
+
+            var leftSize = Liste.Count / divideThrough2;
+
+            var rightSize = Liste.Count - leftSize;
+
+            var i = 0;
+
+            var l = 0;
+
+            var r = 0;
+            #endregion
 
             while (l < leftSize && r < rightSize)
             {
@@ -239,30 +333,53 @@ namespace SortierAlgorithmus
         }
         #endregion
 
+        #endregion
+
         #region QuickSort
+
+        #region Which QuickSort
+
         internal void WhichQuickSort(ref List<int> Liste, int Possibility)
         {
-            if (Possibility == 1)
+            if (Possibility == smallToBig)
             {
                 Liste = QuickSortSB(Liste);
             }
-            if (Possibility == 2)
+            if (Possibility == bigToSmall)
             {
                 Liste = QuickSortBS(Liste);
             }
         }
 
+        #endregion
+
+        #region Small to Big
+
         internal List<int> QuickSortSB(List<int> Liste)
         {
-            if (Liste.Count == 1) return Liste;
+            #region Fields
+
+            var nothingLeft = 0;
+
+            var oneLeft = 1;
+
+            var i = 0;
+
+            #endregion
+
+            #region List
 
             List<int> smaller = new List<int>();
 
             List<int> bigger = new List<int>();
 
-            int pivot = Liste[Liste.Count - 1];
+            #endregion
 
-            for (int i = 0; i < Liste.Count - 1; i++)
+            if (Liste.Count == oneLeft) return Liste;
+
+            int pivot = Liste[Liste.Count - oneLeft];
+
+            for (; i < Liste.Count - oneLeft; i++)
             {
                 if (Liste[i] <= pivot)
                 {
@@ -273,8 +390,8 @@ namespace SortierAlgorithmus
                     bigger.Add(Liste[i]);
                 }
             }
-            if (smaller.Count > 0) smaller = QuickSortSB(smaller);
-            if (bigger.Count > 0) bigger = QuickSortSB(bigger);
+            if (smaller.Count > nothingLeft) smaller = QuickSortSB(smaller);
+            if (bigger.Count > nothingLeft) bigger = QuickSortSB(bigger);
 
             smaller.Add(pivot);
 
@@ -285,18 +402,35 @@ namespace SortierAlgorithmus
 
             return smaller;
         }
+        #endregion
+
+        #region Big to Small
 
         internal List<int> QuickSortBS(List<int> Liste)
         {
-            if (Liste.Count == 1) return Liste;
+            #region Fields
+
+            var nothingLeft = 0;
+
+            var oneLeft = 1;
+
+            var i = 0;
+
+            #endregion
+
+            #region List
 
             List<int> smaller = new List<int>();
 
             List<int> bigger = new List<int>();
 
-            int pivot = Liste[Liste.Count - 1];
+            #endregion
 
-            for (int i = 0; i < Liste.Count - 1; i++)
+            if (Liste.Count == oneLeft) return Liste;
+
+            int pivot = Liste[Liste.Count - oneLeft];
+
+            for (; i < Liste.Count - oneLeft; i++)
             {
                 if (Liste[i] > pivot)
                 {
@@ -307,8 +441,8 @@ namespace SortierAlgorithmus
                     bigger.Add(Liste[i]);
                 }
             }
-            if (smaller.Count > 0) smaller = QuickSortBS(smaller);
-            if (bigger.Count > 0) bigger = QuickSortBS(bigger);
+            if (smaller.Count > nothingLeft) smaller = QuickSortBS(smaller);
+            if (bigger.Count > nothingLeft) bigger = QuickSortBS(bigger);
 
             smaller.Add(pivot);
 
@@ -319,6 +453,8 @@ namespace SortierAlgorithmus
 
             return smaller;
         }
+        #endregion
+
         #endregion
     }
 }
