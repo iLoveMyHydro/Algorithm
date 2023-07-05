@@ -105,11 +105,16 @@ namespace SortierAlgorithmus
 
 
         #region Game Loop
-
+        /// <summary>
+        /// Loop of the "Game" 
+        /// Restart after one List is sorted
+        /// Loop can be stopped with the last option in the main menu
+        /// </summary>
         internal void IsListSorted()
         {
             var menu = new Menu();
 
+            //Infinity loop -> Can be stopped in the MenuRequest-Method with option 4
             do
             {
                 HowListSort();
@@ -132,7 +137,11 @@ namespace SortierAlgorithmus
         #endregion
 
         #region Which Algorithm
-
+        /// <summary>
+        /// User decides which Algorithm he wants to use
+        /// Can decide between Bubblesort, Mergesort or Quicksort
+        /// </summary>
+        /// <param name="Liste"></param>
         private void WhichAlgorithm(ref List<int> Liste)
         {
             #region Fields
@@ -177,13 +186,15 @@ namespace SortierAlgorithmus
                 (int left, int top) = Console.GetCursorPosition();
                 ConsoleKeyInfo key;
 
+                //Menu where the User can choose betweeen the 3 Sorting Algorithms -> With pressing Enter method 
+                //will be stopped
                 while (!isSelected)
                 {
                     Console.SetCursorPosition(left, top);
 
-                    Console.WriteLine($"{(option == optionBubbleSort ? decorator : "   ")} {TextBubbleSort}");
-                    Console.WriteLine($"{(option == optionMergeSort ? decorator : "   ")} {TextMergeSort}");
-                    Console.WriteLine($"{(option == optionQuickSort ? decorator : "   ")} {TextQuickSort}");
+                    Console.WriteLine($"{(option == optionBubbleSort ? decorator : "  ")} {TextBubbleSort}");
+                    Console.WriteLine($"{(option == optionMergeSort ? decorator : "  ")} {TextMergeSort}");
+                    Console.WriteLine($"{(option == optionQuickSort ? decorator : "  ")} {TextQuickSort}");
 
                     key = Console.ReadKey(false);
 
@@ -210,8 +221,6 @@ namespace SortierAlgorithmus
                 if (option == optionMergeSort) algorithms.WhichMergeSort(Liste, Possibility);
                 if (option == optionMergeSort) algorithms.WhichQuickSort(ref Liste, Possibility);
             }
-
-
         }
 
         #endregion
@@ -274,7 +283,13 @@ namespace SortierAlgorithmus
         #endregion
 
         #region How is the List is Sorted
-
+        /// <summary>
+        /// User decide hwo the List will be sorted
+        /// Can decide between
+        /// Small to Big (1) -> 1,2,3,4,5,6,7,8,9,10
+        /// Big to Small (2) -> 10,9,8,7,6,5,4,3,2,1
+        /// or Zickzack (3) -> 10,1,9,2,8,3,7,4,6,5
+        /// </summary>
         private void HowListSort()
         {
             #region Fields
@@ -309,13 +324,15 @@ namespace SortierAlgorithmus
             (int left, int top) = Console.GetCursorPosition();
             ConsoleKeyInfo key;
 
+            //Menu where the User can choose how the List will be Sorted
+            //-> Can stop the method with pressing Enter on the option
             while (!isSelected)
             {
                 Console.SetCursorPosition(left, top);
 
-                Console.WriteLine($"{(option == optionSmallToBig ? decorator : "   ")}{TextSmallToBig}");
-                Console.WriteLine($"{(option == optionBigToSmall ? decorator : "   ")}{TextBigToSmall}");
-                Console.WriteLine($"{(option == optionZickZack ? decorator : "   ")}{TextZickzack}");
+                Console.WriteLine($"{(option == optionSmallToBig ? decorator : "  ")}{TextSmallToBig}");
+                Console.WriteLine($"{(option == optionBigToSmall ? decorator : "  ")}{TextBigToSmall}");
+                Console.WriteLine($"{(option == optionZickZack ? decorator : "  ")}{TextZickzack}");
 
                 key = Console.ReadKey(false);
 
@@ -345,7 +362,11 @@ namespace SortierAlgorithmus
         #endregion
 
         #region Is the List Random or self generated
-
+        /// <summary>
+        /// User decide if he wants to make a own List or if the List will be automatically generated
+        /// option 1 -> automatically generated
+        /// option 2 -> user generated 
+        /// </summary>
         private void IsListRandom()
         {
             #region Fields
@@ -373,12 +394,14 @@ namespace SortierAlgorithmus
             (int left, int top) = Console.GetCursorPosition();
             ConsoleKeyInfo key;
 
+            //Menu where the User can choose if he wants a own generated List or a automatically generated
+            //Can stop the method with pressing enter on the option he wants
             while (!isSelected)
             {
                 Console.SetCursorPosition(left, top);
 
-                Console.WriteLine($"{(option == lowestOption ? decorator : "   ")}{TextLetCreate}");
-                Console.WriteLine($"{(option == maxOption ? decorator : "   ")}{TextCreateOnOwn}");
+                Console.WriteLine($"{(option == lowestOption ? decorator : "  ")}{TextLetCreate}");
+                Console.WriteLine($"{(option == maxOption ? decorator : "  ")}{TextCreateOnOwn}");
 
                 key = Console.ReadKey(false);
 
@@ -407,7 +430,14 @@ namespace SortierAlgorithmus
         #endregion
 
         #region How Big Should the List be
-
+        /// <summary>
+        /// User can decide how big the list will be
+        /// User hav 4 different options
+        /// 5 numbers
+        /// 10 numbers
+        /// 15 numbers
+        /// 20 numbers
+        /// </summary>
         private void howBigList()
         {
             #region Fields
@@ -440,14 +470,16 @@ namespace SortierAlgorithmus
             (int left, int top) = Console.GetCursorPosition();
             ConsoleKeyInfo key;
 
+            //Menu where the User can choose between 4 different List sizes
+            //->Can stop method with pressing enter on the option he wants
             while (!isSelected)
             {
                 Console.SetCursorPosition(left, top);
 
-                Console.WriteLine($"{(option == lowestOption ? decorator : "   ")}{TextFiveNumber}");
-                Console.WriteLine($"{(option == option10Number ? decorator : "   ")}{Text10Number}");
-                Console.WriteLine($"{(option == option15Number ? decorator : "   ")}{Text15Number}");
-                Console.WriteLine($"{(option == maxOption ? decorator : "   ")}{Text20Number}");
+                Console.WriteLine($"{(option == lowestOption ? decorator : "  ")}{TextFiveNumber}");
+                Console.WriteLine($"{(option == option10Number ? decorator : "  ")}{Text10Number}");
+                Console.WriteLine($"{(option == option15Number ? decorator : "  ")}{Text15Number}");
+                Console.WriteLine($"{(option == maxOption ? decorator : "  ")}{Text20Number}");
 
                 key = Console.ReadKey(false);
 
@@ -478,7 +510,10 @@ namespace SortierAlgorithmus
         #endregion
 
         #region User Generate List
-
+        /// <summary>
+        /// User generates his own list with his own numbers
+        /// Can go from -1000 to 1000 
+        /// </summary>
         private void ListUserInput()
         {
             #region Fields
@@ -495,6 +530,7 @@ namespace SortierAlgorithmus
 
             Console.Clear();
 
+            //Will go so long the User wanted to have the list
             for (; i <= howManyNumbers; i++)
             {
                 Console.Clear();
@@ -504,6 +540,7 @@ namespace SortierAlgorithmus
                     Console.WriteLine(TextWhatNumber);
                     var canConvert = int.TryParse(Console.ReadLine(), out result);
 
+                    //if the User presses no number 
                     if (!canConvert)
                     {
                         Console.Clear();
@@ -511,6 +548,7 @@ namespace SortierAlgorithmus
                         Console.ReadKey();
                         Console.Clear();
                     }
+                    //if the User wants a number that is to small 
                     else if (result < lowestOption)
                     {
                         Console.Clear();
@@ -518,6 +556,7 @@ namespace SortierAlgorithmus
                         Console.ReadKey();
                         Console.Clear();
                     }
+                    //if the User wants a number that is to big
                     else if (result > maxOption)
                     {
                         Console.Clear();
@@ -525,6 +564,7 @@ namespace SortierAlgorithmus
                         Console.ReadKey();
                         Console.Clear();
                     }
+                    //if everything is fine the input will be added to the list
                     else
                     {
                         Liste.Add(result);
@@ -536,7 +576,10 @@ namespace SortierAlgorithmus
         #endregion
 
         #region Random Generate List
-
+        /// <summary>
+        /// List will be automatically created
+        /// Numbers can go from -1000 to 1000
+        /// </summary>
         private void ListRandom()
         {
             #region Fields
@@ -551,6 +594,7 @@ namespace SortierAlgorithmus
 
             Random rng = new Random();
 
+            //Will add that many numbers to the list how many numbers the User wanted to
             for (; i <= howManyNumbers; i++)
             {
                 Liste.Add((int)rng.NextInt64(lowestOption, maxOption));
