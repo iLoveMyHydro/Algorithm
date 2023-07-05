@@ -52,23 +52,28 @@ namespace SortierAlgorithmus
             " darf nicht größer als 1000 sein!";
 
         private const string TextWhatNumber = "Gebe nun die Zahlen ein die in die Liste soll,\r\n" +
-            "damit diese dann sortiert werden. \r\nGebe die Zahl ein und drücke dann \u001b[32mEnter/Return\u001b[0m." +
+            "damit diese dann sortiert werden. \r\nGebe die Zahl ein und drücke dann " +
+            "\u001b[32mEnter/Return\u001b[0m." +
             " Dann kannst du die nächste Zahl eingeben";
+
+        private const string TextWhichAlgorithm = "Welchen Algorithmus wollen sie verwenden?";
+
+        private const string TextBubbleSort = "Bubblesort\u001b[0m";
+
+        private const string TextMergeSort = "Mergesort\u001b[0m";
+
+        private const string TextQuickSort = "Quicksort\u001b[0m";
         #endregion
 
         #region List
 
         public List<int> Liste = new List<int>();
 
-        public List<int> Liste2 = new List<int>();
-
-        public List<int> Liste3 = new List<int>();
-
         #endregion
 
         #region Properties
 
-        public int Possibility { get; set; } = 0;
+        public int Possibility { get; set; } = -1;
 
         #endregion
 
@@ -89,8 +94,6 @@ namespace SortierAlgorithmus
         {
             var menu = new Menu();
 
-            var algorithms = new Algorithms();
-
             do
             {
                 HowListSort();
@@ -101,17 +104,9 @@ namespace SortierAlgorithmus
 
                 ShowList(Liste);
 
-                algorithms.GetTime();
-
-                algorithms.BubbleSort(Liste, Possibility);
-
-                //algorithms.WhichMergeSort(Liste, Possibility);
-
-                //algorithms.WhichQuickSort(Liste, Possibility);
+                WhichAlgorithm(ref Liste);
 
                 ShowList(Liste);
-
-                //algorithms.ShowTime();
 
                 menu.PrintTitle();
                 menu.MenuRequest();
@@ -119,11 +114,74 @@ namespace SortierAlgorithmus
             while (true);
         }
 
+        private void WhichAlgorithm(ref List<int> Liste)
+        {
+            var algorithms = new Algorithms();
+
+            if (Possibility == 3)
+            {
+                algorithms.BubbleSort(ref Liste, Possibility);
+            }
+            else
+            {
+                //Code von -> https://www.youtube.com/watch?v=YyD1MRJY0qI&list=PLPHO1wRRC5Ltj9KK_XucIXoKGdNdMyZ11&index=9 
+                //Wurde aber zum Teil auf das bestehende Programm umgeändert!
+                //Ist nur in dieser Methode!
+                Console.Clear();
+                Console.OutputEncoding = Encoding.UTF8;
+                Console.CursorVisible = false;
+                Console.ResetColor();
+                Console.WriteLine("\nBenutze ⬆️  und ⬇️  zum navigieren und drücke " +
+                    "\u001b[32mEnter/Return\u001b[0m zum auswählen:");
+                Console.WriteLine("\n" + TextWhichAlgorithm + "\n");
+                (int left, int top) = Console.GetCursorPosition();
+                var option = 1;
+                var decorator = "✅ \u001b[32m";
+                ConsoleKeyInfo key;
+                bool isSelected = false;
+
+                while (!isSelected)
+                {
+                    Console.SetCursorPosition(left, top);
+
+                    Console.WriteLine($"{(option == 1 ? decorator : "   ")}" + TextBubbleSort);
+                    Console.WriteLine($"{(option == 2 ? decorator : "   ")}" + TextMergeSort);
+                    Console.WriteLine($"{(option == 3 ? decorator : "   ")}" + TextQuickSort);
+
+                    key = Console.ReadKey(false);
+
+                    switch (key.Key)
+                    {
+                        case ConsoleKey.UpArrow:
+                        case ConsoleKey.W:
+                            option = option == 1 ? 3 : option - 1;
+                            break;
+
+                        case ConsoleKey.DownArrow:
+                        case ConsoleKey.S:
+                            option = option == 3 ? 1 : option + 1;
+                            break;
+
+                        case ConsoleKey.Enter:
+                            isSelected = true;
+                            break;
+                    }
+                }
+                Console.ResetColor();
+
+                if (option == 1) algorithms.BubbleSort(ref Liste, Possibility);
+                if (option == 2) algorithms.WhichMergeSort(Liste, Possibility);
+                if (option == 3) algorithms.WhichQuickSort(ref Liste, Possibility);
+            }
+
+
+        }
+
         /// <summary>
         /// Code aus der Morgenvorlesung Algorithmen & Datenstrukturen Chapter 2 
         /// </summary>
-        /// <param name="liste"></param>
-        private void ShowList(List<int> liste)
+        /// <param name="Liste"></param>
+        private void ShowList(List<int> Liste)
         {
             Console.Clear();
 
@@ -133,9 +191,9 @@ namespace SortierAlgorithmus
             {
                 Console.WriteLine(TextUnsortedList);
 
-                for (int i = 0; i < liste.Count; i++)
+                for (int i = 0; i < Liste.Count; i++)
                 {
-                    display += Liste[i] + ",";
+                    display += this.Liste[i] + ",";
                 }
                 display = display.Substring(0, display.Length - 1);
                 display += "]";
@@ -149,9 +207,9 @@ namespace SortierAlgorithmus
             {
                 Console.WriteLine(TextSortedList);
 
-                for (int i = 0; i < liste.Count; i++)
+                for (int i = 0; i < Liste.Count; i++)
                 {
-                    display += Liste[i] + ",";
+                    display += this.Liste[i] + ",";
                 }
                 display = display.Substring(0, display.Length - 1);
                 display += "]";
@@ -187,9 +245,9 @@ namespace SortierAlgorithmus
             {
                 Console.SetCursorPosition(left, top);
 
-                Console.WriteLine($"{(option == 1 ? decorator : "  ")}" + TextSmallToBig);
-                Console.WriteLine($"{(option == 2 ? decorator : "  ")}" + TextBigToSmall);
-                Console.WriteLine($"{(option == 3 ? decorator : "  ")}" + TextZickzack);
+                Console.WriteLine($"{(option == 1 ? decorator : "   ")}" + TextSmallToBig);
+                Console.WriteLine($"{(option == 2 ? decorator : "   ")}" + TextBigToSmall);
+                Console.WriteLine($"{(option == 3 ? decorator : "   ")}" + TextZickzack);
 
                 key = Console.ReadKey(false);
 
@@ -242,8 +300,8 @@ namespace SortierAlgorithmus
             {
                 Console.SetCursorPosition(left, top);
 
-                Console.WriteLine($"{(option == 1 ? decorator : "  ")}" + TextLetCreate);
-                Console.WriteLine($"{(option == 2 ? decorator : "  ")}" + TextCreateOnOwn);
+                Console.WriteLine($"{(option == 1 ? decorator : "   ")}" + TextLetCreate);
+                Console.WriteLine($"{(option == 2 ? decorator : "   ")}" + TextCreateOnOwn);
 
                 key = Console.ReadKey(false);
 
@@ -294,10 +352,10 @@ namespace SortierAlgorithmus
             {
                 Console.SetCursorPosition(left, top);
 
-                Console.WriteLine($"{(option == 1 ? decorator : "  ")}" + TextFiveNumber);
-                Console.WriteLine($"{(option == 2 ? decorator : "  ")}" + Text10Number);
-                Console.WriteLine($"{(option == 3 ? decorator : "  ")}" + Text15Number);
-                Console.WriteLine($"{(option == 4 ? decorator : "  ")}" + Text20Number);
+                Console.WriteLine($"{(option == 1 ? decorator : "   ")}" + TextFiveNumber);
+                Console.WriteLine($"{(option == 2 ? decorator : "   ")}" + Text10Number);
+                Console.WriteLine($"{(option == 3 ? decorator : "   ")}" + Text15Number);
+                Console.WriteLine($"{(option == 4 ? decorator : "   ")}" + Text20Number);
 
                 key = Console.ReadKey(false);
 

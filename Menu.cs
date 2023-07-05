@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Text;
 
 namespace SortierAlgorithmus
 {
@@ -42,30 +38,39 @@ namespace SortierAlgorithmus
 
         private const string TextProgrammer = "TextProgrammer: Kay Friese";
 
-        private const string TextExplainMechanics = "In diesem Spiel geht es darum, " +
-            "zwei Monster gegeneinander " +
-            "antreten" +
-            " zu lassen. " +
-            " \r\nZu Beginn wirst du gefragt, welche beiden Monster gegeneinander antreten sollen." +
-            " \r\nEs können nicht " +
-            "dieselben Monster gegeneinander antreten. " +
-            "\r\nDu hast die Wahl zwischen:\r\n\r\nOrk\r\nTroll\r\nGoblin\r\n" +
-            "\r\nDu kannst dich zu Beginn " +
-            "des Spiels " +
-            "für eines der drei Monster entscheiden.\r\nDanach gibst du dem ersten " +
-            "Monster die gewünschten Attribute." +
-            "\r\nEs können keine negativen Attribute angegeben werden, sowie nicht höher als 5000." +
-            " \r\nZuerst wählst du die Lebenspunkte, " +
-            "dann die Angriffspunkte, die Verteidigungspunkte sowie die Schnelligkeit." +
-            "\r\nHast du das beim ersten " +
-            "Monster ausgewählt, darfst du das zweite " +
-            "Monster auswählen und dessen Attribute festlegen." +
-            "\r\nDanach kämpfen die Monster gegeneinander." +
-            "\r\nWelches Monster den ersten Schlag ausführt, hängt " +
-            "von der Geschwindigkeit ab.\r\n\r\nHat eines" +
-            " der beiden Monster keine Lebenspunkte mehr, wird eine " +
-            "Nachricht ausgegeben,\r\nwer gewonnen hat und wie" +
-            " lange der Kampf gedauert hat. \r\n \r\n";
+        //Spielerklärung wurde von ChatGPT erstellt.
+        private const string TextExplainMechanics = "Willkommen beim Zahlen-Sortierer!\r\n" +
+            "Dies ist ein interaktives Programm, das Ihnen ermöglicht,\r\neine Reihe von Zahlen" +
+            " auf verschiedene Weisen zu sortieren.\r\nSie haben die Möglichkeit,\r\nentweder eine " +
+            "zufällige Menge von Zahlen generieren zu lassen oder\r\nselbst eine Reihe von Zahlen " +
+            "einzugeben." +
+            "\r\n \r\n" +
+            "Schritt 1: Auswahl der Sortiermethode" +
+            "\r\nBeim Start des Programms werden sie gefragt,\r\nwelchen Algorithmus sie benutzen wollen." +
+            "\r\nEs stehen Ihnen verschiedene Algorithmen zur Verfügung,\r\nwie beispielsweise \r\n \r\n" +
+            "Bubblesort\r\n" +
+            "Mergesort\r\noder" +
+            " Quicksort." +
+            "\r\n \r\nSchritt 2: Generieren oder Eingeben der Zahlen \r\n" +
+            "Danach werden sie gefragt, ob sie eine erstellte Liste haben möchten,\r\n" +
+            "oder ob sie selber eine Liste erstellen möchten.\r\nSie haben dabei die Auswahl " +
+            "zwischen 5\r\n" +
+            "10\r\n15\r\noder 20 Zahlen \r\n \r\nSchritt 3: Auswahl der Sortierreihenfolge\r\n\r\n" +
+            "Sobald der Sortieralgorithmus ausgewählt wurde," +
+            "\r\nkönnen Sie die gewünschte Sortierreihenfolge festlegen." +
+            "\r\nSie haben die Option, die Zahlen in \r\naufsteigender" +
+            "\r\nabsteigender \r\noder zickzackartiger Reihenfolge \r\nsortieren zu lassen. \r\n" +
+            "Die zickzackartige Reihenfolge bedeutet,\r\ndass zuerst die größte Zahl,\r\n" +
+            "dann die kleinste Zahl \r\ndann die zweitgrößte Zahl" +
+            "\r\ndann die zweitkleinste Zahl und so weiter angezeigt werden." +
+            "\r\n\r\nSchritt 4: Ergebnis anzeigen" +
+            "\r\n\r\nNachdem Sie die Sortiermethode und die Sortierreihenfolge festgelegt haben," +
+            " wird das Programm die sortierte Reihe von Zahlen entsprechend ausgeben.\r\n\r\n" +
+            "Das Zahlen-Sortierer-Projekt bietet Ihnen eine interaktive und benutzerfreundliche Möglichkeit\r\n" +
+            "verschiedene Sortieralgorithmen auf Ihre eigenen Zahlen anzuwenden." +
+            "\r\nSie können verschiedene Algorithmen und Sortierreihenfolgen ausprobieren," +
+            "um die Unterschiede und Effizienz der Sortiermethoden zu erkunden." +
+            "\r\n\r\nViel Spaß beim Sortieren Ihrer Zahlen mit dem Zahlen-Sortierer!";
 
         #endregion
 
@@ -109,10 +114,10 @@ namespace SortierAlgorithmus
             {
                 Console.SetCursorPosition(left, top);
 
-                Console.WriteLine($"{(option == 1 ? decorator : "  ")}" + TextNewListButton);
-                Console.WriteLine($"{(option == 2 ? decorator : "  ")}" + TextGameExplanationButton);
-                Console.WriteLine($"{(option == 3 ? decorator : "  ")}" + TextGameCreditsButton);
-                Console.WriteLine($"{(option == 4 ? decorator : "  ")}" + TextGameQuitButton);
+                Console.WriteLine($"{(option == 1 ? decorator : "   ")}" + TextNewListButton);
+                Console.WriteLine($"{(option == 2 ? decorator : "   ")}" + TextGameExplanationButton);
+                Console.WriteLine($"{(option == 3 ? decorator : "   ")}" + TextGameCreditsButton);
+                Console.WriteLine($"{(option == 4 ? decorator : "   ")}" + TextGameQuitButton);
 
                 key = Console.ReadKey(false);
 
@@ -173,11 +178,9 @@ namespace SortierAlgorithmus
         {
             Console.Clear();
 
-            Console.WriteLine("\n");
-
             Console.WriteLine(TextExplainMechanics);
 
-            Console.WriteLine(TextGoMainMenu);
+            Console.WriteLine("\r\n" + TextGoMainMenu);
 
             Console.ReadKey();
 

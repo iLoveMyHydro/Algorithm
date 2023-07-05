@@ -10,19 +10,13 @@ namespace SortierAlgorithmus
     {
         GameMaster gameMaster = new GameMaster();
 
-        #region Fields
-
-        DateTime time = DateTime.Now;
-
-        #endregion
-
         #region BubbleSort
-        internal void BubbleSort(List<int> Liste, int Possibility)
+        internal void BubbleSort(ref List<int> Liste, int Possibility)
         {
             bool finished = false;
             int j = Liste.Count;
             int saveNumber = 0;
-
+            //Smallest to Biggest
             if (Possibility == 1)
             {
                 do
@@ -43,6 +37,7 @@ namespace SortierAlgorithmus
                 }
                 while (finished);
             }
+            //Biggest to Smallest
             if (Possibility == 2)
             {
                 do
@@ -63,27 +58,36 @@ namespace SortierAlgorithmus
                 }
                 while (finished);
             }
-            else
+            if (Possibility == 3)
             {
-                do
+                //Algorithmus wurde von ChatGPT entworfen da die erste Idee zu kompliziert wurde!
+
+                Liste.Sort();
+                Liste.Reverse();
+
+                // Initialisiere die Variablen und erstelle die Ergebnisliste
+                int largestIndex = 0;
+                int smallestIndex = Liste.Count - 1;
+                List<int> result = new List<int>(Liste.Count);
+
+                bool straightIteration = true;
+
+                while (largestIndex <= smallestIndex)
                 {
-                    Liste.Max();
+                    if (straightIteration)
+                    {
+                        result.Add(Liste[largestIndex]);
+                        largestIndex++;
+                    }
+                    else
+                    {
+                        result.Add(Liste[smallestIndex]);
+                        smallestIndex--;
+                    }
 
-                    finished = false;
-                    for (int i = 0; i < Liste.Count / 2 || j > Liste.Count / 2; i++, j--)
-                        if (Liste[i] < Liste[i + 1])
-                        {
-                            saveNumber = Liste[i];
-
-                            Liste[i] = Liste[i + 1];
-
-                            Liste[i + 1] = saveNumber;
-
-                            finished = true;
-                        }
-                    j--;
+                    straightIteration = !straightIteration;
                 }
-                while (finished);
+                Liste = result;
             }
         }
         #endregion
@@ -96,13 +100,9 @@ namespace SortierAlgorithmus
             {
                 MergeSortSB(Liste);
             }
-            else if (Possibility == 2)
+            if (Possibility == 2)
             {
                 MergeSortBS(Liste);
-            }
-            else
-            {
-                MergeSortZ(Liste);
             }
         }
 
@@ -237,74 +237,88 @@ namespace SortierAlgorithmus
                 r++;
             }
         }
-
-        internal void MergeSortZ(List<int> Liste)
-        {
-
-        }
-
-        internal void MergeZ(List<int> left, List<int> right, List<int> Liste)
-        {
-
-        }
         #endregion
 
         #region QuickSort
-        internal void WhichQuickSort(List<int> Liste, int Possibility)
+        internal void WhichQuickSort(ref List<int> Liste, int Possibility)
         {
             if (Possibility == 1)
             {
-                QuickSortSB(Liste);
+                Liste = QuickSortSB(Liste);
             }
-            else if (Possibility == 2)
+            if (Possibility == 2)
             {
-                QuickSortBS(Liste);
+                Liste = QuickSortBS(Liste);
             }
-            else
+        }
+
+        internal List<int> QuickSortSB(List<int> Liste)
+        {
+            if (Liste.Count == 1) return Liste;
+
+            List<int> smaller = new List<int>();
+
+            List<int> bigger = new List<int>();
+
+            int pivot = Liste[Liste.Count - 1];
+
+            for (int i = 0; i < Liste.Count - 1; i++)
             {
-                QuickSortZ(Liste);
+                if (Liste[i] <= pivot)
+                {
+                    smaller.Add(Liste[i]);
+                }
+                else
+                {
+                    bigger.Add(Liste[i]);
+                }
             }
+            if (smaller.Count > 0) smaller = QuickSortSB(smaller);
+            if (bigger.Count > 0) bigger = QuickSortSB(bigger);
+
+            smaller.Add(pivot);
+
+            foreach (int element in bigger)
+            {
+                smaller.Add(element);
+            }
+
+            return smaller;
         }
 
-        internal void QuickSortSB(List<int> Liste)
+        internal List<int> QuickSortBS(List<int> Liste)
         {
+            if (Liste.Count == 1) return Liste;
 
-        }
-        internal void QuickSB(List<int> left, List<int> right)
-        {
+            List<int> smaller = new List<int>();
 
-        }
+            List<int> bigger = new List<int>();
 
-        internal void QuickSortBS(List<int> Liste)
-        {
+            int pivot = Liste[Liste.Count - 1];
 
-        }
-        internal void QuickBS(List<int> left, List<int> right)
-        {
+            for (int i = 0; i < Liste.Count - 1; i++)
+            {
+                if (Liste[i] > pivot)
+                {
+                    smaller.Add(Liste[i]);
+                }
+                else
+                {
+                    bigger.Add(Liste[i]);
+                }
+            }
+            if (smaller.Count > 0) smaller = QuickSortBS(smaller);
+            if (bigger.Count > 0) bigger = QuickSortBS(bigger);
 
-        }
+            smaller.Add(pivot);
 
-        internal void QuickSortZ(List<int> Liste)
-        {
+            foreach (int element in bigger)
+            {
+                smaller.Add(element);
+            }
 
-        }
-        internal void QuickZ(List<int> left, List<int> right)
-        {
-
+            return smaller;
         }
         #endregion
-
-        #region GetTime
-        internal void GetTime()
-        {
-            time = DateTime.Now;
-        }
-        #endregion
-
-        internal void ShowTime()
-        {
-            Console.WriteLine("BubbleSort:" + (DateTime.Now - time).TotalSeconds);
-            Console.ReadKey();
-        }
     }
 }
